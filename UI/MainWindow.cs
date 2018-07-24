@@ -6,8 +6,11 @@ using System.Linq;
 using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using PACEBuzz.Code;
+using PACEBuzz.Code.Questions;
 using SharpDX.Multimedia;
 using SharpDX.XAudio2;
 
@@ -155,6 +158,18 @@ namespace PACEBuzz
             {
                 this.soundFiles.Add(Path.Combine("Sounds", "beep" + i + ".wav"));
             }
+
+            LoadQuiz();
+            azureSpeechServiceSubscriptionKey = "";
+        }
+
+        private static IList<Question> Questions;
+        private static string azureSpeechServiceSubscriptionKey;
+
+        private static void LoadQuiz()
+        {
+            QuestionLoader questionLoader = new QuestionLoader();
+            Questions = questionLoader.Load("Questions\\Quiz1.txt");
         }
 
         private void OnFormClosed(object sender, EventArgs args)
@@ -900,6 +915,22 @@ namespace PACEBuzz
                 this.buzzLightTimer.Stop();
                 this.buzzLightTimer = null;
             }
+        }
+
+        private void imgPlay_Click(object sender, EventArgs e)
+        {
+            TextToSpeechConvert textToSpeechConvert = new TextToSpeechConvert();
+
+            using (var stream = Task.Run(() => textToSpeechConvert.Read(Questions[0].Body, azureSpeechServiceSubscriptionKey)).Result)
+            {
+                using (var fileStream = File.Create("question1.wav"))
+                {
+                    stream.Seek(0, SeekOrigin.Begin);
+                    stream.CopyTo(fileStream);
+                }
+            }
+
+            PlayXAudioSound("question1.wav");
         }
     }
 

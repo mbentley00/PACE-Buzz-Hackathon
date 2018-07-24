@@ -41,6 +41,8 @@
             this.lblMinBonusCountdown = new System.Windows.Forms.Label();
             this.imgMinBonusCountdown = new System.Windows.Forms.PictureBox();
             this.lblMinQuestionController = new System.Windows.Forms.Label();
+            this.imgPlay = new System.Windows.Forms.PictureBox();
+            this.imgPause = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinForceLastLight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinRefresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinExit)).BeginInit();
@@ -50,6 +52,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgMinNextBuzz)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinReset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinBonusCountdown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgPlay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgPause)).BeginInit();
             this.SuspendLayout();
             // 
             // imgMinForceLastLight
@@ -86,7 +90,7 @@
             // 
             this.imgMinExit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.imgMinExit.Image = global::PACEBuzz.Properties.Resources.Actions_window_close_icon;
-            this.imgMinExit.Location = new System.Drawing.Point(363, 10);
+            this.imgMinExit.Location = new System.Drawing.Point(400, 10);
             this.imgMinExit.Name = "imgMinExit";
             this.imgMinExit.Size = new System.Drawing.Size(19, 17);
             this.imgMinExit.TabIndex = 23;
@@ -108,7 +112,7 @@
             // 
             this.imgMinSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.imgMinSettings.Image = global::PACEBuzz.Properties.Resources.gear_16;
-            this.imgMinSettings.Location = new System.Drawing.Point(313, 10);
+            this.imgMinSettings.Location = new System.Drawing.Point(350, 10);
             this.imgMinSettings.Name = "imgMinSettings";
             this.imgMinSettings.Size = new System.Drawing.Size(19, 17);
             this.imgMinSettings.TabIndex = 21;
@@ -119,7 +123,7 @@
             // 
             this.imgMinHelp.Cursor = System.Windows.Forms.Cursors.Hand;
             this.imgMinHelp.Image = global::PACEBuzz.Properties.Resources.Button_Help_icon;
-            this.imgMinHelp.Location = new System.Drawing.Point(338, 10);
+            this.imgMinHelp.Location = new System.Drawing.Point(375, 10);
             this.imgMinHelp.Name = "imgMinHelp";
             this.imgMinHelp.Size = new System.Drawing.Size(19, 17);
             this.imgMinHelp.TabIndex = 20;
@@ -174,16 +178,39 @@
             this.lblMinQuestionController.AutoSize = true;
             this.lblMinQuestionController.Location = new System.Drawing.Point(4, 10);
             this.lblMinQuestionController.Name = "lblMinQuestionController";
-            this.lblMinQuestionController.Size = new System.Drawing.Size(38, 14);
+            this.lblMinQuestionController.Size = new System.Drawing.Size(49, 20);
             this.lblMinQuestionController.TabIndex = 2;
             this.lblMinQuestionController.Text = "Clear";
             // 
+            // imgPlay
+            // 
+            this.imgPlay.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.imgPlay.Image = global::PACEBuzz.Properties.Resources.Play;
+            this.imgPlay.Location = new System.Drawing.Point(305, 10);
+            this.imgPlay.Name = "imgPlay";
+            this.imgPlay.Size = new System.Drawing.Size(19, 17);
+            this.imgPlay.TabIndex = 27;
+            this.imgPlay.TabStop = false;
+            this.imgPlay.Click += new System.EventHandler(this.imgPlay_Click);
+            // 
+            // imgPause
+            // 
+            this.imgPause.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.imgPause.Image = global::PACEBuzz.Properties.Resources.Pause;
+            this.imgPause.Location = new System.Drawing.Point(325, 10);
+            this.imgPause.Name = "imgPause";
+            this.imgPause.Size = new System.Drawing.Size(19, 17);
+            this.imgPause.TabIndex = 28;
+            this.imgPause.TabStop = false;
+            // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(391, 28);
+            this.ClientSize = new System.Drawing.Size(431, 28);
+            this.Controls.Add(this.imgPause);
+            this.Controls.Add(this.imgPlay);
             this.Controls.Add(this.imgMinExit);
             this.Controls.Add(this.imgMinForceLastLight);
             this.Controls.Add(this.imgMinHelp);
@@ -218,6 +245,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgMinNextBuzz)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinReset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinBonusCountdown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgPlay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgPause)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,6 +265,8 @@
         private System.Windows.Forms.Label lblBuzzersDetected;
         private System.Windows.Forms.PictureBox imgMinRefresh;
         private System.Windows.Forms.PictureBox imgMinForceLastLight;
+        private System.Windows.Forms.PictureBox imgPlay;
+        private System.Windows.Forms.PictureBox imgPause;
     }
 }
 
