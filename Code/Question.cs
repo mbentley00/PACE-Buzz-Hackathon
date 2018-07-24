@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PACEBuzz.Code.Questions
+namespace PACEBuzz.Code
 {
     public class Question
     {
