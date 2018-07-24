@@ -161,7 +161,6 @@ namespace PACEBuzz
             }
 
             LoadQuiz();
-            LoadScoreBoard();
             azureSpeechServiceSubscriptionKey = "fbe073b2befd4b3087302c9e5f650677";
         }
 
@@ -173,12 +172,17 @@ namespace PACEBuzz
             QuestionLoader questionLoader = new QuestionLoader();
             Questions = questionLoader.Load("Questions\\Quiz1.txt");
         }
-        private void LoadScoreBoard()
+
+        private bool isInitializedScores=false;
+        private void initScoreBoard()
         {
-            InitScoreBoard();
-            scoreBoard = new TeamScoreBoard(teamScoreboard);
-            scoreBoard.Show();
-            UpdateScoreBoard();
+            if (!isInitializedScores)
+            {
+                teamScoreboard = new TeamScoreBoardWrapper();
+                scoreBoard = new TeamScoreBoard(teamScoreboard);
+                UpdateScoreBoard();
+                isInitializedScores = true;
+            }
         }
 
         private void UpdateScoreBoard()
@@ -194,11 +198,7 @@ namespace PACEBuzz
             //update 0th team count by 5;
         }
 
-        private void InitScoreBoard()
-        {
-            teamScoreboard = new TeamScoreBoardWrapper();
-
-        }
+    
 
         private void OnFormClosed(object sender, EventArgs args)
         {
@@ -979,6 +979,18 @@ namespace PACEBuzz
                 sourceVoice.Stop();
                 isPaused = true;
             }
+        }
+
+        private bool isScoreShown = false;
+        private void imgScore_Click(object sender, EventArgs e)
+        {
+            initScoreBoard();
+            if (!isScoreShown)
+                scoreBoard.Show();  
+            else
+                scoreBoard.Hide();
+
+
         }
     }
 
