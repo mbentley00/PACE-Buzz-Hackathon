@@ -180,27 +180,21 @@ namespace PACEBuzz
             {
                 teamScoreboard = new TeamScoreBoardWrapper();
                 scoreBoard = new TeamScoreBoard(teamScoreboard);
-                //scoreBoard.Show();
-                UpdateScoreBoard();
                 isInitializedScores = true;
             }
         }
 
-        private void UpdateScoreBoard()
+        private void UpdateScoreBoard(int teamId)
         {
-            GetUpdatedScoreCard();
-            scoreBoard.UpdateScore(2, -5);
-            //
+            int points = 5;
+            //updatet teamscoreboard 
+            teamScoreboard.teamScores[teamId].score += points;
+            //update the UI
+            scoreBoard.UpdateScore(teamId, points);
 
         }
 
-        private void GetUpdatedScoreCard()
-        {
-            //update 0th team count by 5;
-        }
-
-    
-
+       
         private void OnFormClosed(object sender, EventArgs args)
         {
             this.Show();
@@ -614,6 +608,7 @@ namespace PACEBuzz
                 if (button.Red)
                 {
                     this.AddPlayerToBuzzerQueue(player);
+                    UpdateScoreBoard(player.BuzzerIndex);
                 }
 
                 if (button.Blue || button.Orange || button.Green || button.Yellow)

@@ -14,11 +14,11 @@ namespace PACEBuzz
         {
             index = 0;
             teamScores = new List<Team>();
-            teamScores.Add(new Team { Name = "Team A", index = this.index++, score = 5 });
-            teamScores.Add(new Team { Name = "Team B", index = this.index++, score = 15 });
-            teamScores.Add(new Team { Name = "Team C", index = this.index++, score = 10 });
-            teamScores.Add(new Team { Name = "Team D", index = this.index++, score = 10 });
-            teamScores.Add(new Team { Name = "Team E", index = this.index++, score = 10 });
+            teamScores.Add(new Team { Name = "Team A", index = this.index++, score = 0 });
+            teamScores.Add(new Team { Name = "Team B", index = this.index++, score = 0 });
+            teamScores.Add(new Team { Name = "Team C", index = this.index++, score = 0 });
+            teamScores.Add(new Team { Name = "Team D", index = this.index++, score = 0 });
+            teamScores.Add(new Team { Name = "Team E", index = this.index++, score = 0 });
         }
     }
 
