@@ -115,7 +115,8 @@ namespace PACEBuzz
             get;
             set;
         }
-
+        TeamScoreBoard scoreBoard;
+        private TeamScoreBoardWrapper teamScoreboard;
         public MainWindow()
         {
             InitializeComponent();
@@ -162,6 +163,28 @@ namespace PACEBuzz
 
         private QuestionPlayer questionPlayer = new QuestionPlayer("fbe073b2befd4b3087302c9e5f650677");
 
+        private bool isInitializedScores=false;
+        private void initScoreBoard()
+        {
+            if (!isInitializedScores)
+            {
+                teamScoreboard = new TeamScoreBoardWrapper();
+                scoreBoard = new TeamScoreBoard(teamScoreboard);
+                isInitializedScores = true;
+            }
+        }
+
+        private void UpdateScoreBoard(int teamId)
+        {
+            int points = 5;
+            //updatet teamscoreboard 
+            teamScoreboard.teamScores[teamId].score += points;
+            //update the UI
+            scoreBoard.UpdateScore(teamId, points);
+
+        }
+
+       
         private void OnFormClosed(object sender, EventArgs args)
         {
             this.Show();
@@ -572,6 +595,7 @@ namespace PACEBuzz
                 if (button.Red)
                 {
                     this.AddPlayerToBuzzerQueue(player);
+                    UpdateScoreBoard(player.BuzzerIndex);
                 }
 
                 if (button.Blue || button.Orange || button.Green || button.Yellow)
@@ -916,6 +940,19 @@ namespace PACEBuzz
         private void imgPause_Click(object sender, EventArgs e)
         {
             this.questionPlayer.Pause();
+        }
+
+        private void imgScore_Click(object sender, EventArgs e)
+        {
+            
+            initScoreBoard();
+            if(isInitializedScores==true)
+                scoreBoard.Visible = !scoreBoard.Visible;
+
+            //scoreBoard.Show();
+            ;
+
+
         }
     }
 
