@@ -112,6 +112,7 @@
     <Compile Include="Code\QuestionLoader.cs" />
     <Compile Include="Code\Report.cs" />
     <Compile Include="Code\Settings.cs" />
+    <Compile Include="Code\TeamScoreBoard.cs" />
     <Compile Include="Code\TextToSpeechConvert.cs" />
     <Compile Include="Code\Win32USB.cs" />
     <Compile Include="Settings.cs" />
@@ -142,6 +143,12 @@
     <Compile Include="UI\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\TeamScoreBoard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TeamScoreBoard.Designer.cs">
+      <DependentUpon>TeamScoreBoard.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="UI\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
@@ -163,6 +170,9 @@
     </Compile>
     <EmbeddedResource Include="UI\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TeamScoreBoard.resx">
+      <DependentUpon>TeamScoreBoard.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="PACEBuzzSimple_TemporaryKey.pfx" />
     <None Include="packages.config" />

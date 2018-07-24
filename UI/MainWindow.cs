@@ -115,7 +115,8 @@ namespace PACEBuzz
             get;
             set;
         }
-
+        TeamScoreBoard scoreBoard;
+        private TeamScoreBoardWrapper teamScoreboard;
         public MainWindow()
         {
             InitializeComponent();
@@ -160,7 +161,8 @@ namespace PACEBuzz
             }
 
             LoadQuiz();
-            azureSpeechServiceSubscriptionKey = "";
+            LoadScoreBoard();
+            azureSpeechServiceSubscriptionKey = "fbe073b2befd4b3087302c9e5f650677";
         }
 
         private static IList<Question> Questions;
@@ -170,6 +172,32 @@ namespace PACEBuzz
         {
             QuestionLoader questionLoader = new QuestionLoader();
             Questions = questionLoader.Load("Questions\\Quiz1.txt");
+        }
+        private void LoadScoreBoard()
+        {
+            InitScoreBoard();
+            scoreBoard = new TeamScoreBoard(teamScoreboard);
+            scoreBoard.Show();
+            UpdateScoreBoard();
+        }
+
+        private void UpdateScoreBoard()
+        {
+            GetUpdatedScoreCard();
+            scoreBoard.UpdateScore(2, -5);
+            //
+
+        }
+
+        private void GetUpdatedScoreCard()
+        {
+            //update 0th team count by 5;
+        }
+
+        private void InitScoreBoard()
+        {
+            teamScoreboard = new TeamScoreBoardWrapper();
+
         }
 
         private void OnFormClosed(object sender, EventArgs args)
