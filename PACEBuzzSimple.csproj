@@ -110,6 +110,7 @@
     <Compile Include="Code\Player.cs" />
     <Compile Include="Code\Question.cs" />
     <Compile Include="Code\QuestionLoader.cs" />
+    <Compile Include="Code\QuestionPlayer.cs" />
     <Compile Include="Code\Report.cs" />
     <Compile Include="Code\Settings.cs" />
     <Compile Include="Code\TextToSpeechConvert.cs" />

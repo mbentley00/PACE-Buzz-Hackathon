@@ -158,19 +158,9 @@ namespace PACEBuzz
             {
                 this.soundFiles.Add(Path.Combine("Sounds", "beep" + i + ".wav"));
             }
-
-            LoadQuiz();
-            azureSpeechServiceSubscriptionKey = "fbe073b2befd4b3087302c9e5f650677";
         }
 
-        private static IList<Question> Questions;
-        private static string azureSpeechServiceSubscriptionKey;
-
-        private static void LoadQuiz()
-        {
-            QuestionLoader questionLoader = new QuestionLoader();
-            Questions = questionLoader.Load("Questions\\Quiz1.txt");
-        }
+        private QuestionPlayer questionPlayer = new QuestionPlayer("fbe073b2befd4b3087302c9e5f650677");
 
         private void OnFormClosed(object sender, EventArgs args)
         {
@@ -197,7 +187,7 @@ namespace PACEBuzz
                 };
                 stream.Close();
 
-                sourceVoice = new SourceVoice(xaudio2, waveFormat, true);
+                SourceVoice sourceVoice = new SourceVoice(xaudio2, waveFormat, true);
                 sourceVoice.SubmitSourceBuffer(buffer, stream.DecodedPacketsInfo);
                 sourceVoice.Start();
 
@@ -218,9 +208,6 @@ namespace PACEBuzz
                 Console.WriteLine(e);
             }
         }
-
-        private static SourceVoice sourceVoice;
-        private bool isPaused;
 
         private void MainWindow_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -832,6 +819,7 @@ namespace PACEBuzz
         {
             if (!this.settings.QuitPrompt || MessageBox.Show("Are you sure you want to quit?", "PACEBuzz", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                questionPlayer.Dispose();
                 this.Reset();
                 Environment.Exit(0);
             }
@@ -922,35 +910,12 @@ namespace PACEBuzz
 
         private void imgPlay_Click(object sender, EventArgs e)
         {
-            TextToSpeechConvert textToSpeechConvert = new TextToSpeechConvert();
-
-            if(!File.Exists("question1.wav"))
-            {
-                using (var stream = Task.Run(() => textToSpeechConvert.Read(Questions[0].Body, azureSpeechServiceSubscriptionKey)).Result)
-                {
-                    using (var fileStream = File.Create("question1.wav"))
-                    {
-                        stream.Seek(0, SeekOrigin.Begin);
-                        stream.CopyTo(fileStream);
-                    }
-                }
-            }
-
-            SafePlaySound("question1.wav");
+            this.questionPlayer.Play();
         }
 
         private void imgPause_Click(object sender, EventArgs e)
         {
-            if(isPaused)
-            {
-                sourceVoice.Start();
-                isPaused = false;
-            }
-            else
-            {
-                sourceVoice.Stop();
-                isPaused = true;
-            }
+            this.questionPlayer.Pause();
         }
     }
 
