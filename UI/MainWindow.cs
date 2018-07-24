@@ -180,6 +180,7 @@ namespace PACEBuzz
             {
                 teamScoreboard = new TeamScoreBoardWrapper();
                 scoreBoard = new TeamScoreBoard(teamScoreboard);
+                //scoreBoard.Show();
                 UpdateScoreBoard();
                 isInitializedScores = true;
             }
@@ -981,14 +982,15 @@ namespace PACEBuzz
             }
         }
 
-        private bool isScoreShown = false;
         private void imgScore_Click(object sender, EventArgs e)
         {
+            
             initScoreBoard();
-            if (!isScoreShown)
-                scoreBoard.Show();  
-            else
-                scoreBoard.Hide();
+            if(isInitializedScores==true)
+                scoreBoard.Visible = !scoreBoard.Visible;
+
+            //scoreBoard.Show();
+            ;
 
 
         }
