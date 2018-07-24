@@ -202,6 +202,7 @@
             this.imgPause.Size = new System.Drawing.Size(19, 17);
             this.imgPause.TabIndex = 28;
             this.imgPause.TabStop = false;
+            this.imgPause.Click += new System.EventHandler(this.imgPause_Click);
             // 
             // MainWindow
             // 

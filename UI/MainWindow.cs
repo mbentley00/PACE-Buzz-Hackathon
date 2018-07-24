@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 using PACEBuzz.Code;
-using PACEBuzz.Code.Questions;
+
 using SharpDX.Multimedia;
 using SharpDX.XAudio2;
 
@@ -115,8 +115,7 @@ namespace PACEBuzz
             get;
             set;
         }
-        TeamScoreBoard scoreBoard;
-        private TeamScoreBoardWrapper teamScoreboard;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -161,7 +160,6 @@ namespace PACEBuzz
             }
 
             LoadQuiz();
-            LoadScoreBoard();
             azureSpeechServiceSubscriptionKey = "fbe073b2befd4b3087302c9e5f650677";
         }
 
@@ -172,32 +170,6 @@ namespace PACEBuzz
         {
             QuestionLoader questionLoader = new QuestionLoader();
             Questions = questionLoader.Load("Questions\\Quiz1.txt");
-        }
-        private void LoadScoreBoard()
-        {
-            InitScoreBoard();
-            scoreBoard = new TeamScoreBoard(teamScoreboard);
-            scoreBoard.Show();
-            UpdateScoreBoard();
-        }
-
-        private void UpdateScoreBoard()
-        {
-            GetUpdatedScoreCard();
-            scoreBoard.UpdateScore(2, -5);
-            //
-
-        }
-
-        private void GetUpdatedScoreCard()
-        {
-            //update 0th team count by 5;
-        }
-
-        private void InitScoreBoard()
-        {
-            teamScoreboard = new TeamScoreBoardWrapper();
-
         }
 
         private void OnFormClosed(object sender, EventArgs args)
@@ -225,7 +197,7 @@ namespace PACEBuzz
                 };
                 stream.Close();
 
-                var sourceVoice = new SourceVoice(xaudio2, waveFormat, true);
+                sourceVoice = new SourceVoice(xaudio2, waveFormat, true);
                 sourceVoice.SubmitSourceBuffer(buffer, stream.DecodedPacketsInfo);
                 sourceVoice.Start();
 
@@ -246,6 +218,9 @@ namespace PACEBuzz
                 Console.WriteLine(e);
             }
         }
+
+        private static SourceVoice sourceVoice;
+        private bool isPaused;
 
         private void MainWindow_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -949,16 +924,33 @@ namespace PACEBuzz
         {
             TextToSpeechConvert textToSpeechConvert = new TextToSpeechConvert();
 
-            using (var stream = Task.Run(() => textToSpeechConvert.Read(Questions[0].Body, azureSpeechServiceSubscriptionKey)).Result)
+            if(!File.Exists("question1.wav"))
             {
-                using (var fileStream = File.Create("question1.wav"))
+                using (var stream = Task.Run(() => textToSpeechConvert.Read(Questions[0].Body, azureSpeechServiceSubscriptionKey)).Result)
                 {
-                    stream.Seek(0, SeekOrigin.Begin);
-                    stream.CopyTo(fileStream);
+                    using (var fileStream = File.Create("question1.wav"))
+                    {
+                        stream.Seek(0, SeekOrigin.Begin);
+                        stream.CopyTo(fileStream);
+                    }
                 }
             }
 
-            PlayXAudioSound("question1.wav");
+            SafePlaySound("question1.wav");
+        }
+
+        private void imgPause_Click(object sender, EventArgs e)
+        {
+            if(isPaused)
+            {
+                sourceVoice.Start();
+                isPaused = false;
+            }
+            else
+            {
+                sourceVoice.Stop();
+                isPaused = true;
+            }
         }
     }
 
