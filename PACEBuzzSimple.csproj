@@ -86,6 +86,9 @@
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\SharpDX.4.0.0\lib\net45\SharpDX.dll</HintPath>
     </Reference>
@@ -105,6 +108,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\AnswerAnalyzer.cs" />
     <Compile Include="Code\Buzzer.cs" />
     <Compile Include="Code\HIDDevice.cs" />
     <Compile Include="Code\Player.cs" />
@@ -114,6 +118,7 @@
     <Compile Include="Code\Report.cs" />
     <Compile Include="Code\Settings.cs" />
     <Compile Include="Code\TeamScoreBoard.cs" />
+    <Compile Include="Code\TextAnalyzeResult.cs" />
     <Compile Include="Code\TextToSpeechConvert.cs" />
     <Compile Include="Code\Win32USB.cs" />
     <Compile Include="Settings.cs" />

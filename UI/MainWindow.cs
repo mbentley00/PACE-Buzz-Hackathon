@@ -159,6 +159,17 @@ namespace PACEBuzz
             {
                 this.soundFiles.Add(Path.Combine("Sounds", "beep" + i + ".wav"));
             }
+
+            TestAnalyzeAnswer();
+        }
+
+        private void TestAnalyzeAnswer()
+        {
+            var answer = "hmm...I think answer is George Washington.";
+
+            AnswerAnalyzer answerAnalyzer = new AnswerAnalyzer("6e1c1b9632724606a56b1f56f9e8c4a6");
+            var keyPhrases = Task.Run(() => answerAnalyzer.AnalyzeAsync(answer)).Result;
+
         }
 
         private QuestionPlayer questionPlayer = new QuestionPlayer("fbe073b2befd4b3087302c9e5f650677");
