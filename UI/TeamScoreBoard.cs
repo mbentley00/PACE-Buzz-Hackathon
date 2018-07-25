@@ -47,12 +47,12 @@ namespace PACEBuzz
             this.Controls.Add(panel);
         }
 
-        public void UpdateScore(int teamId, int increment)
+        public void UpdateScore(int teamId, int newScore)
         {
             //panel;
             //update 4 + 2n
             Label l = panel.Controls[3 + 2 * teamId] as Label;
-            l.Text = (Int32.Parse(l.Text) + increment).ToString();
+            l.Text = newScore.ToString();
         }
     }
 }

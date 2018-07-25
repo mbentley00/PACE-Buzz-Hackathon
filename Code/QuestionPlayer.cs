@@ -72,7 +72,7 @@ namespace PACEBuzz.Code
             SafePlayQuestionSound(questionWavFileName);
         }
 
-        public void PlayText(string text)
+        public void PlayText(string text, bool synchronous = false)
         {
             TextToSpeechConvert textToSpeechConvert = new TextToSpeechConvert();
 
@@ -87,7 +87,7 @@ namespace PACEBuzz.Code
                 }
             }
 
-            SafePlayNonQuestionSound(wavFileName);
+            SafePlayNonQuestionSound(wavFileName, synchronous);
         }
 
         private void SafePlayQuestionSound(string soundFile)
@@ -109,19 +109,24 @@ namespace PACEBuzz.Code
             }
         }
 
-        private void SafePlayNonQuestionSound(string soundFile)
+        private void SafePlayNonQuestionSound(string soundFile, bool synchronous)
         {
             try
             {
-                if (nonQuestionThread != null)
+                if (!synchronous)
                 {
-                    nonQuestionThread.Abort();
+                    if (nonQuestionThread != null)
+                    {
+                        nonQuestionThread.Abort();
+                    }
+
+                    nonQuestionThread = new Thread(new ParameterizedThreadStart(PlayOtherSound));
+                    nonQuestionThread.Start(soundFile);
                 }
-
-                nonQuestionThread = new Thread(new ParameterizedThreadStart(PlayOtherSound));
-                nonQuestionThread.Start(soundFile);
-
-                // TODO: Dispose the thread?
+                else
+                {
+                    PlayOtherSound(soundFile);
+                }
             }
             catch (Exception)
             {

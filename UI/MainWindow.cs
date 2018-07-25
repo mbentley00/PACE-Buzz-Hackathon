@@ -947,7 +947,7 @@ namespace PACEBuzz
         {
             if (this.BuzzedInPlayer != null)
             {
-                this.LightUpActivePlayer();
+                //this.LightUpActivePlayer();
             }
             else
             {
@@ -1029,6 +1029,9 @@ namespace PACEBuzz
         private void imgMinCorrect_Click(object sender, EventArgs e)
         {
             this.teamScoreboard.teamScores[this.BuzzedInPlayer.BuzzerIndex].score += 10;
+            this.scoreBoard.UpdateScore(this.BuzzedInPlayer.BuzzerIndex, this.teamScoreboard.teamScores[this.BuzzedInPlayer.BuzzerIndex].score);
+            
+            this.questionPlayer.PlayText("Correct, ten points");
             this.NextQuestion();
         }
 
@@ -1036,8 +1039,15 @@ namespace PACEBuzz
         {
             if (!QuestionPlayer.IsAtEndOfQuestion)
             {
+                this.questionPlayer.PlayText("Incorrect, minus five", true);
+
                 this.teamScoreboard.teamScores[this.BuzzedInPlayer.BuzzerIndex].score -= 5;
+                this.scoreBoard.UpdateScore(this.BuzzedInPlayer.BuzzerIndex, this.teamScoreboard.teamScores[this.BuzzedInPlayer.BuzzerIndex].score);
                 this.questionPlayer.Pause();
+            }
+            else
+            {
+                this.questionPlayer.PlayText("Incorrect, no penalty");
             }
 
             this.Reset();
