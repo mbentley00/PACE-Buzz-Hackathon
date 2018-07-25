@@ -34,6 +34,8 @@
             this.lblMinQuestionController = new System.Windows.Forms.Label();
             this.lblQuestionNumber = new System.Windows.Forms.Label();
             this.lblAnswer = new System.Windows.Forms.Label();
+            this.imgNewGame = new System.Windows.Forms.PictureBox();
+            this.imgNext = new System.Windows.Forms.PictureBox();
             this.imgMinIncorrect = new System.Windows.Forms.PictureBox();
             this.imgMinCorrect = new System.Windows.Forms.PictureBox();
             this.imgScore = new System.Windows.Forms.PictureBox();
@@ -48,6 +50,8 @@
             this.imgMinReset = new System.Windows.Forms.PictureBox();
             this.imgMinNextBuzz = new System.Windows.Forms.PictureBox();
             this.imgMinBonusCountdown = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.imgNewGame)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgNext)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinIncorrect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinCorrect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgScore)).BeginInit();
@@ -98,6 +102,7 @@
             this.lblQuestionNumber.Size = new System.Drawing.Size(74, 17);
             this.lblQuestionNumber.TabIndex = 30;
             this.lblQuestionNumber.Text = "Question 1";
+            this.lblQuestionNumber.Visible = false;
             // 
             // lblAnswer
             // 
@@ -107,6 +112,30 @@
             this.lblAnswer.Size = new System.Drawing.Size(74, 17);
             this.lblAnswer.TabIndex = 31;
             this.lblAnswer.Text = "ANSWER:";
+            this.lblAnswer.Visible = false;
+            // 
+            // imgNewGame
+            // 
+            this.imgNewGame.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.imgNewGame.Image = global::PACEBuzz.Properties.Resources.if_flag_green_36053;
+            this.imgNewGame.Location = new System.Drawing.Point(295, 12);
+            this.imgNewGame.Name = "imgNewGame";
+            this.imgNewGame.Size = new System.Drawing.Size(19, 17);
+            this.imgNewGame.TabIndex = 35;
+            this.imgNewGame.TabStop = false;
+            this.imgNewGame.Click += new System.EventHandler(this.imgNewGame_Click);
+            // 
+            // imgNext
+            // 
+            this.imgNext.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.imgNext.Image = global::PACEBuzz.Properties.Resources.if_next_293690;
+            this.imgNext.Location = new System.Drawing.Point(134, 48);
+            this.imgNext.Name = "imgNext";
+            this.imgNext.Size = new System.Drawing.Size(19, 17);
+            this.imgNext.TabIndex = 34;
+            this.imgNext.TabStop = false;
+            this.imgNext.Visible = false;
+            this.imgNext.Click += new System.EventHandler(this.imgNext_Click);
             // 
             // imgMinIncorrect
             // 
@@ -117,6 +146,8 @@
             this.imgMinIncorrect.Size = new System.Drawing.Size(19, 17);
             this.imgMinIncorrect.TabIndex = 33;
             this.imgMinIncorrect.TabStop = false;
+            this.imgMinIncorrect.Visible = false;
+            this.imgMinIncorrect.Click += new System.EventHandler(this.imgMinIncorrect_Click);
             // 
             // imgMinCorrect
             // 
@@ -127,16 +158,19 @@
             this.imgMinCorrect.Size = new System.Drawing.Size(19, 17);
             this.imgMinCorrect.TabIndex = 32;
             this.imgMinCorrect.TabStop = false;
+            this.imgMinCorrect.Visible = false;
+            this.imgMinCorrect.Click += new System.EventHandler(this.imgMinCorrect_Click);
             // 
             // imgScore
             // 
             this.imgScore.Cursor = System.Windows.Forms.Cursors.Hand;
             this.imgScore.Image = global::PACEBuzz.Properties.Resources.scores;
-            this.imgScore.Location = new System.Drawing.Point(273, 12);
+            this.imgScore.Location = new System.Drawing.Point(265, 48);
             this.imgScore.Name = "imgScore";
             this.imgScore.Size = new System.Drawing.Size(19, 17);
             this.imgScore.TabIndex = 29;
             this.imgScore.TabStop = false;
+            this.imgScore.Visible = false;
             this.imgScore.Click += new System.EventHandler(this.imgScore_Click);
             // 
             // imgPause
@@ -148,6 +182,7 @@
             this.imgPause.Size = new System.Drawing.Size(19, 17);
             this.imgPause.TabIndex = 28;
             this.imgPause.TabStop = false;
+            this.imgPause.Visible = false;
             this.imgPause.Click += new System.EventHandler(this.imgPause_Click);
             // 
             // imgPlay
@@ -159,13 +194,14 @@
             this.imgPlay.Size = new System.Drawing.Size(19, 17);
             this.imgPlay.TabIndex = 27;
             this.imgPlay.TabStop = false;
+            this.imgPlay.Visible = false;
             this.imgPlay.Click += new System.EventHandler(this.imgPlay_Click);
             // 
             // imgMinExit
             // 
             this.imgMinExit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.imgMinExit.Image = global::PACEBuzz.Properties.Resources.Actions_window_close_icon;
-            this.imgMinExit.Location = new System.Drawing.Point(400, 10);
+            this.imgMinExit.Location = new System.Drawing.Point(484, 10);
             this.imgMinExit.Name = "imgMinExit";
             this.imgMinExit.Size = new System.Drawing.Size(19, 17);
             this.imgMinExit.TabIndex = 23;
@@ -187,7 +223,7 @@
             // 
             this.imgMinHelp.Cursor = System.Windows.Forms.Cursors.Hand;
             this.imgMinHelp.Image = global::PACEBuzz.Properties.Resources.Button_Help_icon;
-            this.imgMinHelp.Location = new System.Drawing.Point(375, 10);
+            this.imgMinHelp.Location = new System.Drawing.Point(459, 10);
             this.imgMinHelp.Name = "imgMinHelp";
             this.imgMinHelp.Size = new System.Drawing.Size(19, 17);
             this.imgMinHelp.TabIndex = 20;
@@ -198,7 +234,7 @@
             // 
             this.imgMinSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.imgMinSettings.Image = global::PACEBuzz.Properties.Resources.gear_16;
-            this.imgMinSettings.Location = new System.Drawing.Point(350, 10);
+            this.imgMinSettings.Location = new System.Drawing.Point(434, 10);
             this.imgMinSettings.Name = "imgMinSettings";
             this.imgMinSettings.Size = new System.Drawing.Size(19, 17);
             this.imgMinSettings.TabIndex = 21;
@@ -267,6 +303,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(515, 99);
+            this.Controls.Add(this.imgNewGame);
+            this.Controls.Add(this.imgNext);
             this.Controls.Add(this.imgMinIncorrect);
             this.Controls.Add(this.imgMinCorrect);
             this.Controls.Add(this.lblAnswer);
@@ -299,6 +337,8 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainWindow_MouseDown);
+            ((System.ComponentModel.ISupportInitialize)(this.imgNewGame)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgNext)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinIncorrect)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinCorrect)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgScore)).EndInit();
@@ -338,6 +378,8 @@
         private System.Windows.Forms.Label lblAnswer;
         private System.Windows.Forms.PictureBox imgMinCorrect;
         private System.Windows.Forms.PictureBox imgMinIncorrect;
+        private System.Windows.Forms.PictureBox imgNext;
+        private System.Windows.Forms.PictureBox imgNewGame;
     }
 }
 

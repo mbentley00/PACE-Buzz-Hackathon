@@ -10,15 +10,13 @@ namespace PACEBuzz
     {
         public List<Team> teamScores;
         private int index;
-        public TeamScoreBoardWrapper ()
+        public TeamScoreBoardWrapper (int numberOfTeams)
         {
-            index = 0;
             teamScores = new List<Team>();
-            teamScores.Add(new Team { Name = "Team A", index = this.index++, score = 0 });
-            teamScores.Add(new Team { Name = "Team B", index = this.index++, score = 0 });
-            teamScores.Add(new Team { Name = "Team C", index = this.index++, score = 0 });
-            teamScores.Add(new Team { Name = "Team D", index = this.index++, score = 0 });
-            teamScores.Add(new Team { Name = "Team E", index = this.index++, score = 0 });
+            for (int i=1; i<=numberOfTeams; i++)
+            {
+                teamScores.Add(new Team { Name = "Team " + i, index = i, score = 0 });
+            }
         }
     }
 

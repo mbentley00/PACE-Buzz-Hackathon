@@ -234,6 +234,8 @@
     </Content>
     <None Include="Resources\if_accept_35637.png" />
     <None Include="Resources\if_dialog-close_29299.png" />
+    <None Include="Resources\if_next_293690.png" />
+    <None Include="Resources\if_flag_green_36053.png" />
     <Content Include="Resources\Pause.png" />
     <Content Include="Resources\Play.png" />
     <None Include="Resources\scores.png" />

@@ -115,8 +115,10 @@ namespace PACEBuzz
             get;
             set;
         }
-        TeamScoreBoard scoreBoard;
+
+        private TeamScoreBoard scoreBoard;
         private TeamScoreBoardWrapper teamScoreboard;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -160,7 +162,10 @@ namespace PACEBuzz
                 this.soundFiles.Add(Path.Combine("Sounds", "beep" + i + ".wav"));
             }
 
-            TestAnalyzeAnswer();
+
+            this.NewGame();
+            //TestAnalyzeAnswer();
+
         }
 
         private void TestAnalyzeAnswer()
@@ -175,11 +180,12 @@ namespace PACEBuzz
         private QuestionPlayer questionPlayer = new QuestionPlayer("fbe073b2befd4b3087302c9e5f650677");
 
         private bool isInitializedScores=false;
-        private void initScoreBoard()
+
+        private void InitializeScores()
         {
             if (!isInitializedScores)
             {
-                teamScoreboard = new TeamScoreBoardWrapper();
+                teamScoreboard = new TeamScoreBoardWrapper(this.Buzzers.Count);
                 scoreBoard = new TeamScoreBoard(teamScoreboard);
                 isInitializedScores = true;
             }
@@ -187,12 +193,11 @@ namespace PACEBuzz
 
         private void UpdateScoreBoard(int teamId)
         {
-            int points = 5;
-            //updatet teamscoreboard 
-            teamScoreboard.teamScores[teamId].score += points;
-            //update the UI
-            scoreBoard.UpdateScore(teamId, points);
-
+            //int points = 5;
+            ////updatet teamscoreboard 
+            //teamScoreboard.teamScores[teamId].score += points;
+            ////update the UI
+            //scoreBoard.UpdateScore(teamId, points);
         }
 
        
@@ -564,8 +569,14 @@ namespace PACEBuzz
                 if (this.QueuedPlayers.Count == 1)
                 {
                     this.questionPlayer.Pause(forcePause: true);
+                    this.imgMinCorrect.Visible = true;
+                    this.imgMinIncorrect.Visible = true;
+                    this.imgPause.Visible = true;
+                    this.imgPlay.Visible = false;
 
                     this.BuzzedInPlayer = player;
+                    this.questionPlayer.PlayText($"Team {player.BuzzerIndex + 1}, Player {(player.SubBuzzerIndex + 1)}, what is your answer?");
+
                     this.LightUpActivePlayer();
                     this.SafePlaySound(this.soundFiles[player.BuzzerIndex]);
                     this.isFirstBuzzedInPlayer = true;
@@ -948,6 +959,8 @@ namespace PACEBuzz
         private void imgPlay_Click(object sender, EventArgs e)
         {
             this.questionPlayer.Play();
+            this.imgPlay.Visible = false;
+            this.imgPause.Visible = true;
         }
 
         private void imgPause_Click(object sender, EventArgs e)
@@ -957,9 +970,77 @@ namespace PACEBuzz
 
         private void imgScore_Click(object sender, EventArgs e)
         {
-            initScoreBoard();
             if(isInitializedScores==true)
                 scoreBoard.Visible = !scoreBoard.Visible;
+        }
+
+        private void imgNewGame_Click(object sender, EventArgs e)
+        {
+            this.NewGame();
+        }
+
+        private void imgNext_Click(object sender, EventArgs e)
+        {
+            this.NextQuestion();
+        }
+
+        private void NextQuestion()
+        {
+            this.questionPlayer.QuestionNumber++;
+            if (this.questionPlayer.QuestionNumber >= 20)
+            {
+                this.NewGame();
+                return;
+            }
+
+            this.questionPlayer.Stop();
+            this.lblQuestionNumber.Text = "Question " + (this.questionPlayer.QuestionNumber + 1);
+            this.lblAnswer.Text = this.questionPlayer.CurrentQuestion.Answer;
+            this.imgPause.Visible = false;
+            this.imgPlay.Visible = true;
+            this.Reset();
+            this.imgMinCorrect.Visible = false;
+            this.imgMinIncorrect.Visible = false;
+        }
+
+        private void PlayQuestion()
+        {
+            this.imgPlay.Visible = false;
+            this.imgPause.Visible = true;
+            this.imgNext.Visible = true;
+        }
+
+        private void NewGame()
+        {
+            this.InitializeScores();
+            this.lblAnswer.Visible = true;
+            this.lblQuestionNumber.Visible = true;
+            this.imgPlay.Visible = true;
+            this.imgPause.Visible = false;
+            this.imgNext.Visible = true;
+            this.imgMinCorrect.Visible = false;
+            this.imgMinIncorrect.Visible = false;
+            this.imgScore.Visible = true;
+            this.questionPlayer.Reset();
+            this.lblQuestionNumber.Text = "Question 1";
+            this.lblAnswer.Text = this.questionPlayer.CurrentQuestion.Answer;
+        }
+
+        private void imgMinCorrect_Click(object sender, EventArgs e)
+        {
+            this.teamScoreboard.teamScores[this.BuzzedInPlayer.BuzzerIndex].score += 10;
+            this.NextQuestion();
+        }
+
+        private void imgMinIncorrect_Click(object sender, EventArgs e)
+        {
+            if (!QuestionPlayer.IsAtEndOfQuestion)
+            {
+                this.teamScoreboard.teamScores[this.BuzzedInPlayer.BuzzerIndex].score -= 5;
+                this.questionPlayer.Pause();
+            }
+
+            this.Reset();
         }
     }
 
