@@ -563,6 +563,8 @@ namespace PACEBuzz
                 // Play a sound and light up the lights if this is the first player to buzz
                 if (this.QueuedPlayers.Count == 1)
                 {
+                    this.questionPlayer.Pause(forcePause: true);
+
                     this.BuzzedInPlayer = player;
                     this.LightUpActivePlayer();
                     this.SafePlaySound(this.soundFiles[player.BuzzerIndex]);
@@ -955,15 +957,9 @@ namespace PACEBuzz
 
         private void imgScore_Click(object sender, EventArgs e)
         {
-            
             initScoreBoard();
             if(isInitializedScores==true)
                 scoreBoard.Visible = !scoreBoard.Visible;
-
-            //scoreBoard.Show();
-            ;
-
-
         }
     }
 

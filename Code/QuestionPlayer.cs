@@ -140,14 +140,18 @@ namespace PACEBuzz.Code
             }
         }
 
-        public void Pause()
+        /// <summary>
+        /// Pauses/unpauses the current question
+        /// </summary>
+        /// <param name="forcePause">Set to true if you only watn to pause (and never resume)</param>
+        public void Pause(bool forcePause = false)
         {
             if(sourceVoice==null)
             {
                 return;
             }
 
-            if (isPaused)
+            if (isPaused && !forcePause)
             {
                 sourceVoice.Start();
                 isPaused = false;

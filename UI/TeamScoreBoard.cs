@@ -45,8 +45,6 @@ namespace PACEBuzz
             }
 
             this.Controls.Add(panel);
-
-
         }
 
         public void UpdateScore(int teamId, int increment)
