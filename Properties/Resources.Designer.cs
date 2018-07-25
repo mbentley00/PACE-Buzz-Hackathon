@@ -183,6 +183,16 @@ namespace PACEBuzz.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap if_microphone_64465 {
+            get {
+                object obj = ResourceManager.GetObject("if_microphone_64465", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap if_next_293690 {
             get {
                 object obj = ResourceManager.GetObject("if_next_293690", resourceCulture);

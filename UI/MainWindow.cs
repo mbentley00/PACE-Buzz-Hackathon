@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,8 @@ using PACEBuzz.Code;
 
 using SharpDX.Multimedia;
 using SharpDX.XAudio2;
+
+using FuzzyString;
 
 namespace PACEBuzz
 {
@@ -188,6 +191,7 @@ namespace PACEBuzz
                 teamScoreboard = new TeamScoreBoardWrapper(this.Buzzers.Count);
                 scoreBoard = new TeamScoreBoard(teamScoreboard);
                 isInitializedScores = true;
+                scoreBoard.Show();
             }
         }
 
@@ -575,8 +579,6 @@ namespace PACEBuzz
                     this.imgPlay.Visible = false;
 
                     this.BuzzedInPlayer = player;
-                    this.questionPlayer.PlayText($"Team {player.BuzzerIndex + 1}, Player {(player.SubBuzzerIndex + 1)}, what is your answer?");
-
                     this.LightUpActivePlayer();
                     this.SafePlaySound(this.soundFiles[player.BuzzerIndex]);
                     this.isFirstBuzzedInPlayer = true;
@@ -584,6 +586,10 @@ namespace PACEBuzz
                     this.lblMinQuestionController.Text = "Buzz";
                     this.FlashScreen(this.NewBuzzColor);
                     this.BackColor = Color.Red;
+
+                    this.questionPlayer.PlayText($"Team {player.BuzzerIndex + 1}, Player {(player.SubBuzzerIndex + 1)}, what is your answer?", true);
+
+                    this.SayAnswer();
                 }
             }
         }
@@ -1001,6 +1007,7 @@ namespace PACEBuzz
             this.Reset();
             this.imgMinCorrect.Visible = false;
             this.imgMinIncorrect.Visible = false;
+            this.PlayQuestion();
         }
 
         private void PlayQuestion()
@@ -1028,14 +1035,24 @@ namespace PACEBuzz
 
         private void imgMinCorrect_Click(object sender, EventArgs e)
         {
+            this.Correct();
+        }
+
+        private void Correct()
+        {
             this.teamScoreboard.teamScores[this.BuzzedInPlayer.BuzzerIndex].score += 10;
             this.scoreBoard.UpdateScore(this.BuzzedInPlayer.BuzzerIndex, this.teamScoreboard.teamScores[this.BuzzedInPlayer.BuzzerIndex].score);
-            
-            this.questionPlayer.PlayText("Correct, ten points");
+
+            this.questionPlayer.PlayText("Correct, ten points", true);
             this.NextQuestion();
         }
 
         private void imgMinIncorrect_Click(object sender, EventArgs e)
+        {
+            this.Incorrect();
+        }
+
+        private void Incorrect()
         {
             if (!QuestionPlayer.IsAtEndOfQuestion)
             {
@@ -1051,6 +1068,49 @@ namespace PACEBuzz
             }
 
             this.Reset();
+        }
+
+        private void imgSayAnswer_Click(object sender, EventArgs e)
+        {
+            this.SayAnswer();
+            //var answerText = SpeechToTextConverter.RecognitionWithMicrophoneAsync().Result;
+            //lblPlayerAnswer.Visible = true;
+            //lblPlayerAnswer.Text = answerText;
+        }
+
+        private void SayAnswer()
+        {
+            using (Process p = new Process())
+            {
+                p.StartInfo.FileName = @"C:\Users\mbentley\source\repos\SpeechTestConsole\SpeechTestConsole\bin\x64\Debug\SpeechTestConsole.exe";
+                p.Start();
+                p.WaitForExit();
+                string results = File.ReadAllText(@"C:\users\mbentley\documents\text_out.txt");
+                lblPlayerAnswer.Visible = true;
+                lblPlayerAnswer.Text = results;
+
+                this.questionPlayer.PlayText($"Your answer: {results}", true);
+
+                List<FuzzyStringComparisonOptions> options = new List<FuzzyStringComparisonOptions>();
+
+                // Choose which algorithms should weigh in for the comparison
+                options.Add(FuzzyStringComparisonOptions.UseOverlapCoefficient);
+                options.Add(FuzzyStringComparisonOptions.UseLongestCommonSubsequence);
+                options.Add(FuzzyStringComparisonOptions.UseLongestCommonSubstring);
+
+                var equals = results.ApproximatelyEquals(this.questionPlayer.CurrentQuestion.FormattedAnswer, options, FuzzyStringComparisonTolerance.Normal);
+                if (equals)
+                {
+                    // Mark as correct
+                    this.Correct();
+                }
+                else
+                {
+                    // Mark as incorrect
+                    this.Incorrect();
+                }
+            }
+
         }
     }
 

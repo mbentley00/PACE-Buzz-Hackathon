@@ -34,6 +34,7 @@
             this.lblMinQuestionController = new System.Windows.Forms.Label();
             this.lblQuestionNumber = new System.Windows.Forms.Label();
             this.lblAnswer = new System.Windows.Forms.Label();
+            this.imgSayAnswer = new System.Windows.Forms.PictureBox();
             this.imgNewGame = new System.Windows.Forms.PictureBox();
             this.imgNext = new System.Windows.Forms.PictureBox();
             this.imgMinIncorrect = new System.Windows.Forms.PictureBox();
@@ -50,6 +51,8 @@
             this.imgMinReset = new System.Windows.Forms.PictureBox();
             this.imgMinNextBuzz = new System.Windows.Forms.PictureBox();
             this.imgMinBonusCountdown = new System.Windows.Forms.PictureBox();
+            this.lblPlayerAnswer = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.imgSayAnswer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgNewGame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgNext)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinIncorrect)).BeginInit();
@@ -113,6 +116,17 @@
             this.lblAnswer.TabIndex = 31;
             this.lblAnswer.Text = "ANSWER:";
             this.lblAnswer.Visible = false;
+            // 
+            // imgSayAnswer
+            // 
+            this.imgSayAnswer.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.imgSayAnswer.Image = global::PACEBuzz.Properties.Resources.if_microphone_64465;
+            this.imgSayAnswer.Location = new System.Drawing.Point(350, 48);
+            this.imgSayAnswer.Name = "imgSayAnswer";
+            this.imgSayAnswer.Size = new System.Drawing.Size(19, 17);
+            this.imgSayAnswer.TabIndex = 36;
+            this.imgSayAnswer.TabStop = false;
+            this.imgSayAnswer.Click += new System.EventHandler(this.imgSayAnswer_Click);
             // 
             // imgNewGame
             // 
@@ -297,12 +311,24 @@
             this.imgMinBonusCountdown.TabStop = false;
             this.imgMinBonusCountdown.Click += new System.EventHandler(this.imgMinBonusCountdown_Click);
             // 
+            // lblPlayerAnswer
+            // 
+            this.lblPlayerAnswer.AutoSize = true;
+            this.lblPlayerAnswer.Location = new System.Drawing.Point(375, 48);
+            this.lblPlayerAnswer.Name = "lblPlayerAnswer";
+            this.lblPlayerAnswer.Size = new System.Drawing.Size(83, 17);
+            this.lblPlayerAnswer.TabIndex = 37;
+            this.lblPlayerAnswer.Text = "Asnwer text";
+            this.lblPlayerAnswer.Visible = false;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(515, 99);
+            this.Controls.Add(this.lblPlayerAnswer);
+            this.Controls.Add(this.imgSayAnswer);
             this.Controls.Add(this.imgNewGame);
             this.Controls.Add(this.imgNext);
             this.Controls.Add(this.imgMinIncorrect);
@@ -337,6 +363,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainWindow_MouseDown);
+            ((System.ComponentModel.ISupportInitialize)(this.imgSayAnswer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgNewGame)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgNext)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMinIncorrect)).EndInit();
@@ -380,6 +407,8 @@
         private System.Windows.Forms.PictureBox imgMinIncorrect;
         private System.Windows.Forms.PictureBox imgNext;
         private System.Windows.Forms.PictureBox imgNewGame;
+        private System.Windows.Forms.PictureBox imgSayAnswer;
+        private System.Windows.Forms.Label lblPlayerAnswer;
     }
 }
 

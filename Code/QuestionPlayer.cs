@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Media;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -76,7 +76,7 @@ namespace PACEBuzz.Code
         {
             TextToSpeechConvert textToSpeechConvert = new TextToSpeechConvert();
 
-            string wavFileName = $"text.wav";
+            string wavFileName = $"text" + DateTime.Now.ToFileTime() + ".wav";
 
             using (var stream = Task.Run(() => textToSpeechConvert.Read(text, azureSpeechServiceSubscriptionKey)).Result)
             {
@@ -120,12 +120,13 @@ namespace PACEBuzz.Code
                         nonQuestionThread.Abort();
                     }
 
-                    nonQuestionThread = new Thread(new ParameterizedThreadStart(PlayOtherSound));
+                    nonQuestionThread = new Thread(new ParameterizedThreadStart(PlaySoundWithMediaPlayer));
                     nonQuestionThread.Start(soundFile);
                 }
                 else
                 {
-                    PlayOtherSound(soundFile);
+                    PlaySoundWithMediaPlayer(soundFile);
+                    //PlayOtherSound(soundFile);
                 }
             }
             catch (Exception)
@@ -150,6 +151,21 @@ namespace PACEBuzz.Code
         public static void PlayOtherSound(object soundFile)
         {
             PlayXAudioSound(soundFile, false);
+        }
+
+        public static void PlaySoundWithMediaPlayerASync(object soundFile)
+        {
+            SoundPlayer player = new SoundPlayer(soundFile.ToString());
+            player.PlaySync();
+            player.Dispose();
+        }
+
+
+        public static void PlaySoundWithMediaPlayer(object soundFile)
+        {
+            SoundPlayer player = new SoundPlayer(soundFile.ToString());
+            player.PlaySync();
+            player.Dispose();
         }
 
         public static void PlayXAudioSound(object soundFile, bool useQuestionSourceVoice)
@@ -225,7 +241,7 @@ namespace PACEBuzz.Code
         /// <param name="forcePause">Set to true if you only watn to pause (and never resume)</param>
         public void Pause(bool forcePause = false)
         {
-            if (sourceVoice == null)
+            if (sourceVoice == null || sourceVoice.IsDisposed)
             {
                 return;
             }
